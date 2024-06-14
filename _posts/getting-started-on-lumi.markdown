@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Getting started on LUMI"
-date:   2024-06-14 10:00:00 +0200
+date:   2024-06-14 09:00:00 +0200
 author: Thomas Nipen (thomasn@met.no)
 tags: anemoi
 ---
