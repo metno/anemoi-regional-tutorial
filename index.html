@@ -11,12 +11,33 @@ layout: default
   Nipen, Even Nordhagen, Aram Farhad Salihi, Ivar Seierstad, and Paulina Tedesco at MET Norway.
   </p>
 
-  <!--h1 class="page-heading">Posts</h1-->
+  <p>
+  <h1>CURRENTLY UNDER DEVELOPMENT</h1>
+  </p>
+
+  <h1>Tutorial</h1>
+
+  <ul class="post-list">
+    {% assign sorted_pages = site.pages | sort:"order" %}
+    {% assign count = 1 %}
+    {% for page in sorted_pages %}
+    {% if page.title %}
+      <li>
+        <h2>
+            <a class="post-link" href="{{ page.url | prepend: site.baseurl }}">{{ count }}. {{ page.title }}</a>
+        </h2>
+      </li>
+    {% assign count = count | plus:1 %}
+    {% endif %}
+    {% endfor %}
+  </ul>
+
+  <h1>Posts</h1>
 
   <ul class="post-list">
     {% for post in site.posts %}
       <li>
-        <!--span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span-->
+        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
 
         <h2>
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>

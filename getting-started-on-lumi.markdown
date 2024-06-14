@@ -3,6 +3,7 @@ layout: post
 title:  "Getting started on LUMI"
 date:   2024-06-14 09:00:00 +0200
 author: Aram Farhad Salihi, Even Nordhagen, and Thomas Nipen (thomasn@met.no)
+order: 1
 tags: LUMI HPC containers
 ---
 

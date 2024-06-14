@@ -1,8 +1,9 @@
 ---
 layout: post
-title:  "Building datasets"
+title:  "Graphs"
 date:   2024-06-14 10:00:00 +0200
 author: Thomas Nipen (thomasn@met.no)
+order: 3
 tags: anemoi
 ---
 
@@ -11,7 +12,7 @@ Use anemoi-datasets to build datasets for training data-driven models. The full 
 
 ## Getting started
 
-First, install anemoi-datasets:
+First, install aifs-mono:
 
 {% highlight bash %}
 pip3 install anemoi-datasets[all]
