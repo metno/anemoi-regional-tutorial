@@ -33,30 +33,67 @@ build
 ## Setting up Anemoi and aifs-mono
 
 Next, we will create a virtual environment with the repositories that we want to override.
-This installs the `anemoi-datasets` command-line tool.
 
-## Creating a dataset
+Create a virtual environment:
+{% highlight bash %}
+mkdir work
+cd work
+virtualenv .venv
+{% endhighlight %}
 
-To create a dataset, you need a configuration file
-(`config.yaml`) and an output path (`output/`):
+Then clone and install the repositories we want:
 
+{% highlight bash %}
+source .venv/bin/activate
+git clone git@github.com:ecmwf-lab/aifs-mono
+git clone git@github.com:ecmwf/anemoi-datasets
+pip install -e aifs-mono
+pip install -e anemoi-datasets
+{% endhighlight %}
 
+NOTE: These repositories have been installed in editable mode, which means that if you change the code within
+the repositories, the code will be use immediately when referring to them in the virtual environment.
 
-{% highlight yaml %}
-dates:
-  start: 2024-01-01T00:00:00Z
-  end: 2024-01-01T18:00:00Z
-  frequency: 6h
+## Training a model
 
-input:
-  join:
-  - mars:
-      param: [2t, msl, 10u, 10v, lsm]
-      levtype: sfc
-      grid: [1, 1]
-  - mars:
-      param: [q, t, z]
-      levtype: pl
-      level: [50, 100]
-      grid: [1, 1]
+To train a model, you need to set up a job script (call this job_script.sh):
+
+{% highlight bash %}
+#!/bin/bash
+#SBATCH --output=/scratch/project_465000899/aifs/logs/insert_log_name_here.out
+#SBATCH --error=/scratch/project_465000899/aifs/logs/insert_log_name_here.err
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=8
+#SBATCH --account=project_465000899
+#SBATCH --partition=standard-g
+#SBATCH --gpus-per-node=8
+#SBATCH --time=20:00:00
+#
+module load LUMI/22.08 partition/G
+#module load singularity-bindings
+module load aws-ofi-rccl
+
+# Name and notes optional
+# export WANDB_NAME="lumi"
+# export WANDB_NOTES="test run on Lumi"
+#
+export NCCL_SOCKET_IFNAME=hsn
+export NCCL_NET_GDR_LEVEL=3
+export MIOPEN_USER_DB_PATH=/tmp/${USER}-miopen-cache-${SLURM_JOB_ID}
+export MIOPEN_CUSTOM_CACHE_DIR=${MIOPEN_USER_DB_PATH}
+export CXI_FORK_SAFE=1
+export CXI_FORK_SAFE_HP=1
+export FI_CXI_DISABLE_CQ_HUGETLB=1
+export SINGULARITYENV_LD_LIBRARY_PATH=/opt/ompi/lib:${EBROOTAWSMINOFIMINRCCL}/lib:/opt/cray/xpmem/2.4.4-2.3_9.1__gff0e1d9.shasta/lib64:${SINGULARITYENV_LD_LIBRARY_PATH}
+
+export HYDRA_FULL_ERROR=1
+export SINGULARITY_BIND='/pfs:/pfs'
+
+srun singularity exec -B /pfs/:/pfs/ /scratch/project_465000899/aifs/container/containers/aifs-met-benchmark-pytorch-2.0.1-rocm-6.0.0-py3.9-v.0.1.5.sif python /pfs/lustrep4/scratch/project_465000899/insert_your_path_here/ppi_train.py
+{% endhighlight %}
+
+To run the job, do this:
+
+{% highlight bash %}
+sbatch job_script.sh
 {% endhighlight %}
