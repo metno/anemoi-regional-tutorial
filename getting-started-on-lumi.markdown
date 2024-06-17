@@ -70,9 +70,41 @@ dependencies:
       - torchvision==0.17.0+rocm5.6
       - pytorch-triton-rocm
       - triton
-      - einops
-      - pytorch-lightning==2.1.0
       - zarr
+      - trimesh
+      - eccodes
+      - plotly
+      - torchview
+      - graphviz
+      - mlflow-export-import
+      - cfgrib
+      - xarray
+      - netCDF4==1.6.5
+      - pyyaml
+      - ruamel.yaml
+      - boto3
+      - botocore
+      - climetlab
+      - einops
+      - matplotlib
+      - wandb
+      - pytorch-lightning==2.1.0
+      - timm
+      - hydra-core
+      - ecml-tools[data,provenance]
+      - tqdm
+      - pre-commit
+      - networkx
+      - h3
+      - torchinfo
+      - dask
+      - rich
+      - memray
+      - tabulate
+      - mlflow
+      - pyshtools
+      - pandas
+      - scikit-image
       - torch_geometric==2.4.0
       - anemoi-utils[provenance]>=0.3
       - git+https://github.com/metno/anemoi-datasets.git@feature-branch
