@@ -23,12 +23,16 @@ This installs the `anemoi-datasets` command-line tool.
 ## Creating a dataset
 
 To create a dataset, you need a configuration file
-(`config.yaml`) and an output path (`output/`):
+(`config.yaml`) and an output path (`output.zarr/`):
 
 {% highlight bash %}
-anemoi-datasets create config.yaml output/
+anemoi-datasets create config.yaml output.zarr/
 {% endhighlight %}
 
+NOTE: Make sure the output name ends in zarr or zip, otherwise the tool
+does not know what type of archive to create.
+
+Here is an example configuration file that retrieves ERA5 fields from mars.
 
 {% highlight yaml %}
 dates:
