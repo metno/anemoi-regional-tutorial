@@ -72,8 +72,6 @@ get_master_node() {
     echo "$master_node"
 }
 
-
-
 export MASTER_ADDR=$(get_master_node)
 export MASTER_PORT=$(find_unused_port 29500)
 export WORLD_SIZE=$SLURM_NPROCS

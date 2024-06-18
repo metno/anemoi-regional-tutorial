@@ -1,0 +1,18 @@
+dates:
+  start: 2024-01-01T00:00:00Z
+  end: 2024-01-01T18:00:00Z
+  frequency: 6h
+
+input:
+  pipe:
+    - cds:
+      format: 'grib'
+      domain: 'east_domain'
+      dataset: reanalysis-carra-single-levels
+      level_type: surface_or_atmosphere
+      variable: [  '2m_relative_humidity',
+            '2m_temperature',
+            'total_column_integrated_water_vapour'
+            ]
+      product_type: 'analysis'
+    - carra: {}

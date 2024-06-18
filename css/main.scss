@@ -29,7 +29,6 @@ $on-palm:          600px;
 $on-laptop:        800px;
 
 
-
 // Use media queries like this:
 // @include media-query($on-palm) {
 //     .wrapper {
@@ -51,3 +50,11 @@ $on-laptop:        800px;
         "layout",
         "syntax-highlighting"
 ;
+
+pre {
+    background-color: #dddddd;
+}
+code {
+    background-color: #dddddd;
+}
+
