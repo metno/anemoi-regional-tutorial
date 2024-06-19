@@ -4,6 +4,7 @@ title:  "Useful links"
 date:   2024-06-14 10:00:00 +0200
 author: Thomas Nipen (thomasn@met.no)
 order: 400
+toc: true
 tags: anemoi
 ---
 

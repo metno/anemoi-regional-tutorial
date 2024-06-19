@@ -4,17 +4,15 @@ title:  "Training a model"
 date:   2024-06-14 10:00:00 +0200
 author: Thomas Nipen (thomasn@met.no)
 order: 4
+toc: true
 tags: anemoi
 ---
 
 In this tutorial, we will train a data-driven model. A pre-requisite is to have set up aifs-mono environment.
+The first step is to change the default configuration options in aifs-mono. we will change configuration
+files located in `aifs/config/`.
 
-## Configuring the model
-
-The first step is to change the default configuration options in aifs-mono. we will change configuration files
-located in `aifs/config/`.
-
-### 1. Set up paths
+## Set basic configuration options
 
 Add the file `aifs/config/harware/paths/lumi.yaml`
 {% highlight yaml %}
@@ -49,8 +47,8 @@ num_gpus_per_model: 1
 
 Next, we will set the files
 
-### 2. Set dataloader options
+## Set dataloader options
 
 Add the file `aifs/config/dataloader/lumi.yaml`
 
-## Run the model
+## Runing the model
