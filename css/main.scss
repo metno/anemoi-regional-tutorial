@@ -52,10 +52,14 @@ $on-laptop:        800px;
 ;
 
 pre {
-    background-color: #dddddd;
+    background-color: #ffeedd;
 }
+pre code {
+    background-color: #ffeedd;
+}
+
 code {
-    background-color: #dddddd;
+    background-color: #ffffff;
 }
 
 .toc__list:before {
