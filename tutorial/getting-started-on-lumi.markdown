@@ -4,6 +4,7 @@ title:  "Getting started on LUMI"
 date:   2024-06-14 09:00:00 +0200
 author: Aram Farhad Salihi (arams@met.no), Even Nordhagen, and Thomas Nipen (thomasn@met.no)
 order: 1
+toc: true
 tags: LUMI HPC containers
 ---
 
@@ -71,6 +72,9 @@ packages in the container.
 
 First, create a virtual environment:
 {% highlight bash %}
+module load LUMI/22.08  partition/G
+module load cray-python
+
 mkdir work
 cd work
 virtualenv .venv
@@ -82,8 +86,8 @@ Then clone and install the repositories we want:
 source .venv/bin/activate
 git clone git@github.com:ecmwf-lab/aifs-mono
 git clone git@github.com:ecmwf/anemoi-datasets
-pip install -e aifs-mono
-pip install -e anemoi-datasets
+pip install --no-deps -e aifs-mono/
+pip install --no-deps -e anemoi-datasets/
 {% endhighlight %}
 
 NOTE: These repositories have been installed in editable mode, which means that if you change the code within
@@ -92,6 +96,7 @@ the repositories, the code will be use immediately when referring to them in the
 ## Setting up a job script
 
 To train a model, you need to set up a job script that loads the virtual environment and runs the container.
+Look at the full [LUMI documentation](https://lumi-supercomputer.github.io/LUMI-EasyBuild-docs/p/PyTorch/) for more information.
 In this example, we will call the script `job_script.sh`([download]({{ site.baseurl }}/assets/files/job_script.sh)):
 
 {% highlight bash %}
