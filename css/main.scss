@@ -59,7 +59,6 @@ code {
 }
 
 .toc__list:before {
-    content: "Table Of Contents";
     font-weight: bold;
     font-size: 1.5rem;
 }
@@ -67,21 +66,25 @@ code {
 .toc__list {
     border: 2px solid #eee;
     border-radius: 4px;
-    line-height: 1.8rem;
-    padding: 1rem 1.5rem;
+    line-height: 1.5rem;
+    padding: 0rem 0rem;
     font-weight: 600;
+    margin-left: 0rem;
+
+    list-style-type: none;
+
 }
 
 .toc__sublist li {
-    padding-left: 1.25rem;
+    padding-left: 0.25rem;
+
 }
 
 .toc-h2:first-child {
-    margin-top: 1rem;
-}  
+    margin-top: 0rem;
+}
 
 #toc a {
-    color: #BE185D;
     text-decoration: underline;
 }
 
