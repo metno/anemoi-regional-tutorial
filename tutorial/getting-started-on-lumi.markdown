@@ -127,3 +127,6 @@ To schedule the job, do this:
 {% highlight bash %}
 sbatch job_script.sh
 {% endhighlight %}
+
+When the job is finished, the SLURM log files should show print statements from the script run on each of the
+8 ranks.
