@@ -8,7 +8,8 @@ toc: true
 tags: LUMI HPC containers
 ---
 
-A pre-requisite for this tutorial is that you have a LUMI-G account and are able to log in to the system with ssh.
+A pre-requisite for this tutorial is that you have a LUMI-G account and are able to log in to the system with
+ssh. All scripts used in this tutorial are available [here]({{ site.baseurl }}/assets/files/lumi).
 
 ## Building a container
 
@@ -33,20 +34,20 @@ this tutorial, we will use the sif image: `lumi-rocm-rocm-5.6.1.sif`.
 We will use this image as a starting point and expand it by adding the dependencies we need for Anemoi. To do
 this, we will use the "cotainer" tool, which is available through the module system. To simplify the building
 process, you can create a script called `create_container.sh` ([download]({{ site.baseurl
-}}/assets/files/create_container.sh)) as follows:
+}}/assets/files/lumi/create_container.sh)) as follows:
 
 {% highlight bash %}
-{% include files/create_container.sh %}
+{% include files/lumi/create_container.sh %}
 {% endhighlight %}
 
 This script takes three arguments. The first is the output name of your new container. The second is the name
 of the ROCm container we are basing the image of (e.g `lumi-rocm-rocm-5.6.1.sif`). The last argument is a
 yaml file which lists the dependencies we want to install into the new container. The following yaml file
-([download]({{ site.baseurl }}/assets/files/dependencies.yaml)) declares all the dependencies we need for
+([download]({{ site.baseurl }}/assets/files/lumi/dependencies.yaml)) declares all the dependencies we need for
 Anemoi:
 
 {% highlight yaml%}
-{% include files/dependencies.yaml %}
+{% include files/lumi/dependencies.yaml %}
 {% endhighlight %}
 
 If you want add more python packages you can either place it under dependencies (for packages available in
@@ -104,10 +105,10 @@ the repositories, the code will be use immediately when referring to them in the
 
 To train a model, you need to set up a job script that loads the virtual environment and runs the container.
 Look at the full [LUMI documentation](https://lumi-supercomputer.github.io/LUMI-EasyBuild-docs/p/PyTorch/) for more information.
-In this example, we will call the script `job_script.sh`([download]({{ site.baseurl }}/assets/files/job_script.sh)):
+In this example, we will call the script `job_script.sh`([download]({{ site.baseurl }}/assets/files/lumi/job_script.sh)):
 
 {% highlight bash %}
-{% include files/job_script.sh %}
+{% include files/lumi/job_script.sh %}
 {% endhighlight %}
 
 You need to tailor the script to your needs:
@@ -116,10 +117,10 @@ You need to tailor the script to your needs:
 - Set the full path to your singularity container
 - Set the full path to the script you want to run
 
-If you want to test that everything is set up correctly, you could use the following script ([download]({{ site.baseurl }}/assets/files/example.py)) and call it in the job script:
+If you want to test that everything is set up correctly, you could use the following script ([download]({{ site.baseurl }}/assets/files/lumi/example.py)) and call it in the job script:
 
 {% highlight python %}
-{% include files/example.py %}
+{% include files/lumi/example.py %}
 {% endhighlight %}
 
 To schedule the job, do this:

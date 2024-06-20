@@ -44,10 +44,10 @@ NOTE: Make sure the output name ends in zarr or zip, otherwise the tool
 does not know what type of archive to create, and will fail.
 
 Here is an example configuration file that retrieves ERA5 fields from mars
-([download]({{ site.baseurl }}/assets/files/example_config.yaml )).
+([download]({{ site.baseurl }}/assets/files/datasets/example_config.yaml )).
 
 {% highlight yaml %}
-{% include files/example_config.yaml %}
+{% include files/datasets/example_config.yaml %}
 {% endhighlight %}
 
 Once the dataset has been created, you can inspect it's content with:
@@ -101,10 +101,10 @@ To add new filters, add a new python file to `src/anemoi/datasets/create/functio
 source, add a new python file to `src/anemoi/datasets/create/functions/source`.
 
 CARRA is stored on the Climate Data Store (CDS) so we need a new source. Create the file
-`src/anemoi/datasets/create/functions/source/cds.py` ([download]({{ site.baseurl }}/assets/files/cds.py )):
+`src/anemoi/datasets/create/functions/source/cds.py` ([download]({{ site.baseurl }}/assets/files/datasets/cds.py )):
 
 {% highlight python %}
-{% include files/cds.py %}
+{% include files/datasets/cds.py %}
 {% endhighlight %}
 
 Next, as not all variables in CARRA are the same as in ERA5, we need to convert these. One example is the fact
@@ -112,14 +112,14 @@ that CARRA stores orography, whereas in the ERA5 datasets we use geopotential he
 a very specific filter that performs all transformations needed on the CARRA dataset: Ideally,
 each of these transformations could be a separate filter allowing for code reuse across datasets, but to
 simplify the tutorial, we use one filter. Create a file called:
-`src/anemoi/datasets/create/functions/filters/carra.py` ([download]({{ site.baseurl }}/assets/files/carra.py )):
+`src/anemoi/datasets/create/functions/filters/carra.py` ([download]({{ site.baseurl }}/assets/files/datasets/carra.py )):
 
 {% highlight python %}
-{% include files/carra.py %}
+{% include files/datasets/carra.py %}
 {% endhighlight %}
 
-Create a `carra.yaml` config file ([download]({{ site.baseurl }}/assets/files/carra.yaml )):
+Create a `carra.yaml` config file ([download]({{ site.baseurl }}/assets/files/datasets/carra.yaml )):
 
 {% highlight yaml %}
-{% include files/carra.yaml %}
+{% include files/datasets/carra.yaml %}
 {% endhighlight %}
