@@ -83,7 +83,7 @@ export FI_CXI_DISABLE_CQ_HUGETLB=1
 # Enable verbose hydra error outputs in Anemoi
 export HYDRA_FULL_ERROR=1
 
-export PYTHONUSERPATH=<full_path_to_your_env>
+export PYTHONUSERBASE=<full_path_to_your_env>
 
 srun --cpu-bind=map_cpu:49,57,17,25,1,9,33,41 \
 singularity exec -B /pfs:/pfs \

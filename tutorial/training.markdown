@@ -8,27 +8,16 @@ toc: true
 tags: anemoi
 ---
 
-In this tutorial, we will train a data-driven model. A pre-requisite is to have set up aifs-mono environment.
-The first step is to change the default configuration options in aifs-mono. we will change configuration
-files located in `aifs/config/`.
+In this tutorial, we will train an Anemoi model. A pre-requisite is that you have set up aifs-mono and its
+dependencies. The first step is to change the configuration options, which are located in `aifs/config/`.
 
 ## Set basic configuration options
 
-Add the file `aifs/config/harware/paths/lumi.yaml`
+First, we will create a configuration file specifying the paths specific to our system. Here is an example we
+have used on LUMI. Add the file `aifs/config/harware/paths/lumi.yaml`([download]({{ site.baseurl }}/assets/files/training/lumi.yaml )).
+
 {% highlight yaml %}
-data: /pfs/lustrep4/scratch/project_465000899/aifs/dataset
-output_base: /pfs/lustrep4/scratch/project_465000899/aifs/experiments/
-output: ${hardware.paths.output_base}/
-logs:
-  base: ${hardware.paths.output}logs/
-  wandb: ${hardware.paths.logs.base}
-  tensorboard: ${hardware.paths.logs.base}/tensorboard
-  #We might want to add mlflow functionality, and if so, define the path here
-checkpoints: ${hardware.paths.output}checkpoints/
-plots: ${hardware.paths.output}plots/
-losses: ${hardware.paths.output}losses/
-profiler: ${hardware.paths.output}profiler/
-graph: /pfs/lustrep4/scratch/project_465000899/aifs/graphs/
+{% include files/training/lumi.yaml %}
 {% endhighlight %}
 
 Next, we will set the files

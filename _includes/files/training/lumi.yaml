@@ -1,0 +1,13 @@
+data: /pfs/lustrep4/scratch/project_465000899/aifs/dataset
+output_base: /pfs/lustrep4/scratch/project_465000899/aifs/experiments/
+output: ${hardware.paths.output_base}/
+logs:
+  base: ${hardware.paths.output}logs/
+  wandb: ${hardware.paths.logs.base}
+  tensorboard: ${hardware.paths.logs.base}/tensorboard
+  #We might want to add mlflow functionality, and if so, define the path here
+checkpoints: ${hardware.paths.output}checkpoints/
+plots: ${hardware.paths.output}plots/
+losses: ${hardware.paths.output}losses/
+profiler: ${hardware.paths.output}profiler/
+graph: /pfs/lustrep4/scratch/project_465000899/aifs/graphs/
