@@ -8,11 +8,9 @@ toc: true
 tags: anemoi
 ---
 
-anemoi-datasets is a flexible tool for building training-ready datasets in aifs-mono and ensures that the
-datasets are optimized and compatible. The full documentation for the tool is
-[here](https://anemoi-datasets.readthedocs.io/en/latest/).
-
-A few good reasons to use the tools are:
+anemoi-datasets is a flexible tool for building training-ready datasets that are optimized for aifs-mono. The
+full documentation for the tool is [here](https://anemoi-datasets.readthedocs.io/en/latest/). Some good
+reasons to use the tool are:
 - It ensures the data is compatible with aifs-mono
 - It automatically computes normalization coefficients used in the training
 - It supports many data-formats, including GRIB, NetCDF

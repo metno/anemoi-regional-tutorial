@@ -8,21 +8,22 @@ toc: true
 tags: LUMI HPC containers
 ---
 
-A pre-requisite for this tutorial is that you have a LUMI-G account and are able to log in to the system with
-ssh. All scripts used in this tutorial are available [here]({{ site.baseurl }}/assets/files/lumi).
+This tutorial will help you install Anemoi and submit jobs on the LUMI supercomputer. A pre-requisite is that
+you have a LUMI account and are able to log in to the system with ssh. All scripts used in this tutorial are
+available [here]({{ site.baseurl }}/assets/files/lumi).
 
 ## Building a container
 
-On LUMI, containers should be used in order to reduce strain on the lustre file system. The general strategy
-is to build a singularity container with all dependencies, and leave code that you frequently edit (e.g.
-Anemoi and aifs-mono) in a virtual environment stored outside the container. We do this since building a
-container takes a while and we don't want to rebuild it every time we change a line of python code.
+On LUMI, singularity containers should be used in order to reduce strain on the lustre file system. The
+general strategy is to build a container with all dependencies, and leave code that you frequently
+edit (e.g. Anemoi and aifs-mono) in a virtual environment stored outside the container. We do this since
+building a container takes a while and we don't want to rebuild it every time we change a line of python code.
 
 AMD has built a custom images of ROCm (versions 5.4.1 up to 5.6.1), which contains drivers that allows us to
 run PyTorch on AMD GPUs. The images are highly optimized for running on LUMI and contain libraries that
 enables efficient communications between nodes and GPUs (e.g. HPE CRAY libfabric, HPE CRAY MPICH,
-RCCL and aws-ofi-rccl), which uses HPE Slingshot 11 high-speed interconnect. The prebuilt images are located
-at:
+RCCL and aws-ofi-rccl), which uses HPE Slingshot 11 high-speed interconnect. On LUMI, the prebuilt images are
+located in:
 
 {% highlight bash %}
 /appl/local/containers/sif-images/
@@ -50,28 +51,28 @@ Anemoi:
 {% include files/lumi/dependencies.yaml %}
 {% endhighlight %}
 
-If you want add more python packages you can either place it under dependencies (for packages available in
-conda) or pip. To build the container, run the following:
+If you want add more python packages, you can either place it under dependencies (for packages available
+through conda) or pip (for packages available through pip). To build the container, run the following:
 
 {% highlight bash %}
-./create_container your_container.sif lumi-rocm-rocm-5.6.1.sif dependencies.yaml
+bash ./create_container.sh anemoi_container.sif lumi-rocm-rocm-5.6.1.sif dependencies.yaml
 {% endhighlight %}
 
-This will create a container called `your_container.sif`, and takes approximately 10-12 minutes.
+This will create a container called `anemoi_container.sif`, and takes approximately 10-12 minutes.
 
 NOTE: In the future, as the Anemoi codebase inevitably changes and requires new dependencies (or newer
 versions of existing dependencies), you will have to build a new container. The container you use must
 contain the dependencies required by the specific version of the code base that you have checked out. It is
-therefore good practice to organize how you name your containers.
+therefore good practice to devise a naming scheme for your containers.
 
 ## Setting up Anemoi and aifs-mono
 
 The container we created will let you create datasets, create graphs, and train models since all Anemoi and
 aifs-mono dependencies are stored in the container (they were listed in the yaml file). If you are working on
-adding new functionality to either aifs-mono or Anemoi pacakges, it can be a hassle to rebuild containers
+adding new functionality to either aifs-mono or Anemoi packages, it can be a hassle to rebuild containers
 everytime we change a line of code. Instead, we can create a virtual environment with the repositories that
-we want to override. Packages installed in the virtual environment are loaded preferentially over the
-packages in the container.
+we want to override and store this outside the container. Packages installed in the virtual environment are
+loaded preferentially over the packages in the container.
 
 We recommend using the container to install the dependencies into the virtual environment. This ensures that
 the packages for the right Python version are installed (there is no guarantee that the Python version in the
@@ -79,10 +80,11 @@ container is also available through the module system om LUMI).
 
 First, enter a shell inside the container:
 {% highlight bash %}
-singularity exec <your_container>.sif bash
+singularity exec anemoi_container.sif bash
 {% endhighlight %}
 
-Then create a virtual environment, and clone and install the repositories we want:
+By default, singularity mounts your home directory, which allows you to modify the filesystem on the outside
+from within the container. Create an environment, and clone and install any repository you want:
 
 {% highlight bash %}
 mkdir work
@@ -99,12 +101,14 @@ pip install -e anemoi-datasets/
 You can exit the singularity container by running the command `exit`.
 
 NOTE: These repositories have been installed in editable mode, which means that if you change the code within
-the repositories, the code will be use immediately when referring to them in the virtual environment.
+the repositories, the code will be in use immediately when referring to them in the virtual environment.
 
 ## Setting up a job script
 
-To train a model, you need to set up a job script that loads the virtual environment and runs the container.
-Look at the full [LUMI documentation](https://lumi-supercomputer.github.io/LUMI-EasyBuild-docs/p/PyTorch/) for more information.
+To run a job in LUMI (such as training a model), you need to set up a job script that sets the virtual
+environment and runs the container.
+Look at the full [LUMI documentation](https://lumi-supercomputer.github.io/LUMI-EasyBuild-docs/p/PyTorch/) for
+more information.
 In this example, we will call the script `job_script.sh`([download]({{ site.baseurl }}/assets/files/lumi/job_script.sh)):
 
 {% highlight bash %}
@@ -115,9 +119,9 @@ You need to tailor the script to your needs:
 - Adjust the SBATCH directives are correct (e.g. fill in your project number)
 - Set the PYTHONUSERBASE to the virtual environent (e.g. the .venv directory in the previous section)
 - Set the full path to your singularity container
-- Set the full path to the script you want to run
+- Set the command you want to run inside the container
 
-If you want to test that everything is set up correctly, you could use the following script ([download]({{ site.baseurl }}/assets/files/lumi/example.py)) and call it in the job script:
+If you want to test that everything is set up correctly, you could use the following script ([download]({{ site.baseurl }}/assets/files/lumi/example.py)) and set <command> to `python example.py` in job_script.py:
 
 {% highlight python %}
 {% include files/lumi/example.py %}

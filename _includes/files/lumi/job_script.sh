@@ -6,7 +6,7 @@
 #SBATCH --account=<your_project_name_or_number>
 #SBATCH --partition=dev-g
 #SBATCH --gpus-per-node=8
-#SBATCH --time=01:00:00
+#SBATCH --time=00:01:00
 #SBATCH --job-name=anemoi_train
 
 module load LUMI/23.09 partition/G
@@ -89,4 +89,4 @@ srun --cpu-bind=map_cpu:49,57,17,25,1,9,33,41 \
 singularity exec -B /pfs:/pfs \
 	         -B /var/spool/slurmd,/opt/cray/,/usr/lib64/libcxi.so.1,/usr/lib64/libjansson.so.4 \
 		 <full_path_to_container>.sif \
-		 <full_path_to_job_script>
+		 <command_to_run>
