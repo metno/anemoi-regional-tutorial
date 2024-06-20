@@ -51,4 +51,4 @@ Next, we will set the files
 
 Add the file `aifs/config/dataloader/lumi.yaml`
 
-## Runing the model
+## Running the model
