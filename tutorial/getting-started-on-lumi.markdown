@@ -41,7 +41,7 @@ process, you can create a script called `create_container.sh` ([download]({{ sit
 {% endhighlight %}
 
 This script takes three arguments. The first is the output name of your new container. The second is the name
-of the ROCm container we are basing the image of (e.g `lumi-rocm-rocm-5.6.1.sif`). The last argument is a
+of the ROCm container we are basing the image on (e.g `lumi-rocm-rocm-5.6.1.sif`). The last argument is a
 yaml file which lists the dependencies we want to install into the new container. The following yaml file
 ([download]({{ site.baseurl }}/assets/files/lumi/dependencies.yaml)) declares all the dependencies we need for
 Anemoi:
