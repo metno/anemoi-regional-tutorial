@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Building datasets"
+title:  "Datasets"
 date:   2024-06-14 10:00:00 +0200
 author: Thomas Nipen (thomasn@met.no)
 order: 2
@@ -8,9 +8,17 @@ toc: true
 tags: anemoi
 ---
 
-anemoi-datasets is a flexible tool for building training-ready datasets that are optimized for aifs-mono. The
-full documentation for the tool is [here](https://anemoi-datasets.readthedocs.io/en/latest/). Some good
-reasons to use the tool are:
+## Downloading existing datasets
+
+To see what datasets area already available, checkout https://anemoi.ecmwf.int/datasets (requires ECMWF login
+credentials). The site provides download links to files in S3 buckets, and paths to where files are located
+on LUMI and Leonardo.
+
+## Creating your own a dataset
+
+To create a dataset based on your own input data, you can use anemoi-datasets. This is a flexible tool for
+building training-ready datasets that are optimized for aifs-mono. The full documentation for the tool is
+[here](https://anemoi-datasets.readthedocs.io/en/latest/). Some good reasons to use the tool are:
 - It ensures the data is compatible with aifs-mono
 - It automatically computes normalization coefficients used in the training
 - It supports many data-formats, including GRIB, NetCDF
@@ -19,8 +27,6 @@ reasons to use the tool are:
         models)
 - It is extendable to new input formats and new filters
 
-## Getting started
-
 Install the anemoi-datasets package like this:
 
 {% highlight bash %}
@@ -28,8 +34,6 @@ pip3 install anemoi-datasets[all]
 {% endhighlight %}
 
 This installs the `anemoi-datasets` command-line tool.
-
-## Creating a dataset
 
 To create a dataset, you need a configuration file
 (`example_config.yaml`) and an output path (`dataset.zarr/`):

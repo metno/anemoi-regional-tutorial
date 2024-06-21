@@ -9,35 +9,28 @@ tags: anemoi
 ---
 
 In this tutorial, we will train an Anemoi model. A pre-requisite is that you have set up aifs-mono and its
-dependencies. The first step is to change the configuration options, which are located in `aifs/config/`.
+dependencies.
 
-## Set basic configuration options
-
-First, we will create a configuration file specifying the paths specific to our system. Here is an example we
-have used on LUMI. Add the file `aifs/config/harware/paths/lumi.yaml`([download]({{ site.baseurl }}/assets/files/training/lumi.yaml )).
+## Creating a configuration
+The first step is to change the configuration options, which are located in
+`aifs-mono/aifs/config/`. Configuration options in aifs-mono are split across files based on topic. We will
+rely on a lot of these, but override specific ones. Here is a configuration file tailored to a stretched grid
+model, which we will call: `config_regional.yaml`
+([download]({{ site.baseurl }}/assets/files/training/config_regional.yaml)):
 
 {% highlight yaml %}
-{% include files/training/lumi.yaml %}
+{% include files/training/config_regional.yaml %}
 {% endhighlight %}
 
-Next, we will set the files
+The part under "default" loads options from . The rest overrides these.
 
-Connect these files: `aifs/config/hardware/lumi.yaml`
-{% highlight yaml %}
-defaults:
-  - paths: lumi
-  - files: lumi
+The options that are important for us are:
+- hardware.paths.data: Base directory where datasets are stored
+- hardware.paths.output: where will model checkpoints and plots be stored
+- hardware.graphs
 
-# number of GPUs per node and number of nodes (for DDP)
-num_gpus_per_node: 8
-num_nodes: 4
-num_gpus_per_model: 1
+## Training the model
+
+{% highlight bash %}
+aifs-train  --config-dir ./ --config-name config_regional.yaml
 {% endhighlight %}
-
-Next, we will set the files
-
-## Set dataloader options
-
-Add the file `aifs/config/dataloader/lumi.yaml`
-
-## Running the model

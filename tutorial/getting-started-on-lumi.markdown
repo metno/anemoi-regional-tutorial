@@ -135,5 +135,5 @@ To schedule the job, do this:
 sbatch job_script.sh
 {% endhighlight %}
 
-When the job is finished, the SLURM log files should show print statements from the script run on each of the
-8 ranks.
+When the job is finished, the SLURM log files should show each print statement 8 times (once from each of the
+8 tasks).
