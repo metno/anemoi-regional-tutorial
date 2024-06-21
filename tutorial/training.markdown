@@ -11,12 +11,12 @@ tags: anemoi
 In this tutorial, we will train an Anemoi model. A pre-requisite is that you have set up aifs-mono and its
 dependencies.
 
-## Creating a configuration
+## Configuration Options
 The first step is to change the configuration options, which are located in
 `aifs-mono/aifs/config/`. Configuration options in aifs-mono are split across files based on topic. We will
 rely on a lot of these, but override specific ones. Here is a configuration file tailored to a stretched grid
 model, which we will call: `config_regional.yaml`
-([download]({{ site.baseurl }}/assets/files/training/config_regional.yaml)):
+([download]({{ site.baseurl }}/assets/files/training/config_regional.yaml)).
 
 {% highlight yaml %}
 {% include files/training/config_regional.yaml %}
@@ -24,10 +24,22 @@ model, which we will call: `config_regional.yaml`
 
 The part under "default" loads options from . The rest overrides these.
 
+The first part specifies the default options from the specified config files. For example, `data: zarr` loads
+data options from `config/data/zarr.yaml`.
+
+The options after the `default` section override specific options provided by default. For example, we
+override the number of channels in our model to 512 (which is 1024 in the default configuration).
+
 The options that are important for us are:
 - hardware.paths.data: Base directory where datasets are stored
 - hardware.paths.output: where will model checkpoints and plots be stored
 - hardware.graphs
+
+We've turned off trainable parameters to allow us to perform transfer learning
+
+### Transfer learning
+
+1
 
 ## Training the model
 
