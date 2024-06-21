@@ -9,8 +9,8 @@
 title: Regional modelling with Anemoi
 email: thomasn@met.no
 description: > # this means to ignore newlines until "baseurl:"
-baseurl: "/anemoi-tutorials" # the subpath of your site, e.g. /blog
-url: "https://tnipen.github.io/" # the base hostname & protocol for your site
+baseurl: "/anemoi-regional-tutorial" # the subpath of your site, e.g. /blog
+url: "https://metno.github.io/" # the base hostname & protocol for your site
 github_username:  tnipen
 
 # Build settings

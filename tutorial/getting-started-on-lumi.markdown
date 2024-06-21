@@ -51,6 +51,9 @@ Anemoi:
 {% include files/lumi/dependencies.yaml %}
 {% endhighlight %}
 
+NOTE: In the pip dependencies, we specify two specific versions of anemoi-datasets and anemoi-models that
+include code needed for regional modelling.
+
 If you want add more python packages, you can either place it under dependencies (for packages available
 through conda) or pip (for packages available through pip). To build the container, run the following:
 
@@ -92,7 +95,7 @@ cd work
 virtualenv .venv
 
 source .venv/bin/activate
-git clone git@github.com:ecmwf-lab/aifs-mono
+git clone git@github.com:ecmwf-lab/aifs-mono@hackathon
 git clone git@github.com:ecmwf/anemoi-datasets
 pip install -e aifs-mono/
 pip install -e anemoi-datasets/
