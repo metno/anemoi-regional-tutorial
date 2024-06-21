@@ -35,11 +35,20 @@ The options that are important for us are:
 - hardware.paths.output: where will model checkpoints and plots be stored
 - hardware.graphs
 
-We've turned off trainable parameters to allow us to perform transfer learning
-
 ### Transfer learning
 
-1
+If you want to pre-train a model on one domain and fine-tune on another, you first need to turn off trainable
+parameters:
+
+{% highlight yaml %}
+model:
+  trainable_parameters:
+    data: 0
+    hidden: 0
+    data2hidden: 0
+    hidden2data: 0
+    hidden2hidden: 0 # GNN and GraphTransformer Processor only
+{% endhighlight %}
 
 ## Training the model
 
