@@ -8,8 +8,8 @@ toc: true
 tags: anemoi
 ---
 
-In this tutorial, we will train an Anemoi model. A pre-requisite is that you have set up aifs-mono and its
-dependencies.
+In this tutorial, we will train a regional Anemoi model. A pre-requisite is that you have set up aifs-mono and its
+dependencies and that you have available an ERA5 O96 dataset and a MEPS 10km dataset.
 
 ## Configuration Options
 The first step is to change the configuration options, which are located in
@@ -35,10 +35,16 @@ The options that are important for us are:
 - hardware.paths.output: where will model checkpoints and plots be stored
 - hardware.graphs
 
+### Diagnostics
+
+You can enable your training run to log to ML-flow by setting `enabled: True` under `mlflow`. The value you
+set for `experiment_name` to create a group many of your runs. `run_name` should be something uniquely
+describing one specific training run.
+
 ### Transfer learning
 
 If you want to pre-train a model on one domain and fine-tune on another, you first need to turn off trainable
-parameters:
+parameters by adding this to your configuration:
 
 {% highlight yaml %}
 model:
