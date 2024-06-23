@@ -44,18 +44,18 @@ process, you can create a script called `create_container.sh` ([download]({{ sit
 This script takes three arguments. The first is the output name of your new container. The second is the name
 of the ROCm container we are basing the image on (e.g `lumi-rocm-rocm-5.6.1.sif`). The last argument is a
 yaml file which lists the dependencies we want to install into the new container. The following yaml file
-([download]({{ site.baseurl }}/assets/files/lumi/dependencies.yaml)) declares all the dependencies we need for
-Anemoi:
+([download]({{ site.baseurl }}/assets/files/lumi/dependencies.yaml)) is a working combination of dependencies
+for regional modelling on LUMI:
 
 {% highlight yaml%}
 {% include files/lumi/dependencies.yaml %}
 {% endhighlight %}
 
-NOTE: In the pip dependencies, we specify two specific versions of anemoi-datasets and anemoi-models that
-include code needed for regional modelling.
+NOTE: In the pip dependencies, we specify specific versions of anemoi-datasets and anemoi-models that
+include code needed for regional modelling. These features will eventually be merged into the respective
+repositories.
 
-If you want add more python packages, you can either place it under dependencies (for packages available
-through conda) or pip (for packages available through pip). To build the container, run the following:
+To build the container, run the following:
 
 {% highlight bash %}
 bash ./create_container.sh anemoi_container.sif lumi-rocm-rocm-5.6.1.sif dependencies.yaml
@@ -70,14 +70,17 @@ therefore good practice to devise a naming scheme for your containers.
 
 ## Setting up Anemoi and aifs-mono
 
-The container we created will let you create datasets, create graphs, and train models since all Anemoi and
-aifs-mono dependencies are stored in the container (they were listed in the yaml file). If you are working on
-adding new functionality to either aifs-mono or Anemoi packages, it can be a hassle to rebuild containers
-everytime we change a line of code. Instead, we can create a virtual environment with the repositories that
-we want to override and store this outside the container. Packages installed in the virtual environment are
-loaded preferentially over the packages in the container.
+We did not include aifs-mono in the container above. This is because you will likely work a lot with this
+repository when configuring your training runs. Since it is a hassle to rebuild containers everytime we change
+a line of code, we will instead create a virtual environment with aifs-mono in it that is stored as regular
+files on the lustre file system.
 
-We recommend using the container to install the dependencies into the virtual environment. This ensures that
+We can similarily install other pacakges into the virtual environment that we want to change, such as
+anemoi-datasets. Packages installed in the virtual environment will be loaded preferentially over the packages
+in the container if they exist in both places.
+
+To build the virtual environment, we will use the `virtualenv` tool provided by the Python installation inside
+the container. We recommend using the container to set up the virtual envionrment and the packages to ensure that
 the packages for the right Python version are installed (there is no guarantee that the Python version in the
 container is also available through the module system om LUMI).
 
@@ -96,15 +99,30 @@ virtualenv .venv
 
 source .venv/bin/activate
 git clone git@github.com:ecmwf-lab/aifs-mono@hackathon
-git clone git@github.com:ecmwf/anemoi-datasets
 pip install -e aifs-mono/
-pip install -e anemoi-datasets/
 {% endhighlight %}
 
 You can exit the singularity container by running the command `exit`.
 
-NOTE: These repositories have been installed in editable mode, which means that if you change the code within
-the repositories, the code will be in use immediately when referring to them in the virtual environment.
+NOTE: aifs-mono has been installed in editable mode, which means that if you change the code within the
+repository, the code will be in use immediately next time you run the code.
+
+Optional: If you wanted to install anemoi-datasets (or any other repository) into the virtual environment, you would do this:
+
+{% highlight bash %}
+git clone git@github.com:ecmwf/anemoi-datasets
+pip install -e anemoi-datasets/
+{% endhighlight %}
+
+To remove the installation of anemoi-datasets from the virtual environment, just do this:
+{% highlight bash %}
+pip uninstall anemoi-datasets
+{% endhighlight %}
+
+If you have lost track where a package is loaded from, just do this:
+{% highlight bash %}
+pip freeze | anemoi-datasets
+{% endhighlight %}
 
 ## Setting up a job script
 
@@ -120,7 +138,7 @@ In this example, we will call the script `job_script.sh`([download]({{ site.base
 
 You need to tailor the script to your needs:
 - Adjust the SBATCH directives are correct (e.g. fill in your project number)
-- Set the PYTHONUSERBASE to the virtual environent (e.g. the .venv directory in the previous section)
+- Set the VIRTUAL_ENV variable to the virtual environent (e.g. the .venv directory in the previous section)
 - Set the full path to your singularity container
 - Set the command you want to run inside the container
 

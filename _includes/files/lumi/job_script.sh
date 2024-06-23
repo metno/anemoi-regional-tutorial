@@ -83,7 +83,12 @@ export FI_CXI_DISABLE_CQ_HUGETLB=1
 # Enable verbose hydra error outputs in Anemoi
 export HYDRA_FULL_ERROR=1
 
-export PYTHONUSERBASE=<full_path_to_your_env>
+# Set this virtual environment
+export VIRTUAL_ENV=<full_path_to_your_env>
+
+# Ensure the virtual environment is loaded inside the container
+export PYTHONUSERBASE=$VIRTUAL_ENV
+export PATH=$PATH:$VIRTUAL_ENV/bin
 
 srun --cpu-bind=map_cpu:49,57,17,25,1,9,33,41 \
 singularity exec -B /pfs:/pfs \

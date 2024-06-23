@@ -1,4 +1,5 @@
 defaults:
+  - hardware: atos
   - data: zarr
   - dataloader: default
   - model: graphtransformer
@@ -46,7 +47,7 @@ dataloader:
     sort_vars: True
 
 hardware:
-  num_gpus_per_node: 1
+  num_gpus_per_node: 8
   num_nodes: 1
   num_gpus_per_model: 1
   paths:
