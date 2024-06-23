@@ -10,9 +10,9 @@ tags: anemoi
 
 ## Downloading existing datasets
 
-To see what datasets area already available, checkout https://anemoi.ecmwf.int/datasets (requires ECMWF login
-credentials). The site provides download links to files in S3 buckets, and paths to where files are located
-on LUMI and Leonardo.
+To see what datasets area already available, checkout [https://anemoi.ecmwf.int/datasets](https://anemoi.ecmwf.int/datasets)
+(requires ECMWF login credentials). The site provides download links to files in S3 buckets, and paths to where
+files are located on LUMI and Leonardo.
 
 ## Creating your own a dataset
 

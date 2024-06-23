@@ -22,24 +22,27 @@ model, which we will call: `config_regional.yaml`
 {% include files/training/config_regional.yaml %}
 {% endhighlight %}
 
-The part under "default" loads options from . The rest overrides these.
-
 The first part specifies the default options from the specified config files. For example, `data: zarr` loads
-data options from `config/data/zarr.yaml`.
+data options from `aifs-mono/aifs/config/data/zarr.yaml`.
 
-The options after the `default` section override specific options provided by default. For example, we
-override the number of channels in our model to 512 (which is 1024 in the default configuration).
+The options after the `defaults` section override specific options provided by default. For example, we
+override the number of gpus per node to 8 (which is 1 in the default atos configuration that we loaded for
+hardware).
 
 The options that are important for us are:
-- hardware.paths.data: Base directory where datasets are stored
-- hardware.paths.output: where will model checkpoints and plots be stored
-- hardware.graphs
-
-### Diagnostics
-
-You can enable your training run to log to ML-flow by setting `enabled: True` under `mlflow`. The value you
-set for `experiment_name` to create a group many of your runs. `run_name` should be something uniquely
-describing one specific training run.
+- **hardware.num_gpus_per_node**: Set this to 8 on LUMI (as there are 8 GPU partitions per node). Other compute
+- **hardware.num_gpus_per_model**: This specifies model paralellism. When running large models on many nodes,
+    consider increasing this.
+clusters might have a different value.
+- **hardware.paths.data**: Base directory where datasets are stored
+- **hardware.paths.output**: Where will model checkpoints and other output data such as plots be stored
+- **hardware.files**: This names the datasets that we will use to train with. Use `dataset` for specifying the
+global dataset and `dataset_lam` for the limited area dataset.
+- **hardware.files.graph**: If you have pre-computed a specific graph, specify this here. Otherwise, a new
+graph will be constructed on the fly.
+- **diagnostic.log.mlflow**: You can enable your training run to log to ML-flow by setting `enabled: True`.
+The value you set for `experiment_name` to create a group many of your runs. `run_name` should be something
+uniquely describing one specific training run.
 
 ### Transfer learning
 
@@ -56,8 +59,23 @@ model:
     hidden2hidden: 0 # GNN and GraphTransformer Processor only
 {% endhighlight %}
 
+Your first training run will not use stretched grid, and will only use the ERA5 dataset. You need to change
+the dataloader section like this:
+{% highlight yaml %}
+dataloader:
+    dataset: ${hardware.paths.data}/${hardware.files.dataset}
+{% endhighlight %}
+
+Also, set `graphs: default` in the `defaults`section at the top (we don't want a stretched grid graph) and
+remove `dataset_lam` in `hardware: files`.
+
 ## Training the model
+
+Finally we can train a regional model! Run this:
 
 {% highlight bash %}
 aifs-train  --config-dir ./ --config-name config_regional.yaml
 {% endhighlight %}
+
+If you are running this in the [job script on LUMI]({{ 'getting-started-on-lumi' }}) that we looked at earlier
+by following, just replace `<command_to_run>` with the aifs-train command above.
