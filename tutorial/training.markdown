@@ -66,8 +66,12 @@ dataloader:
     dataset: ${hardware.paths.data}/${hardware.files.dataset}
 {% endhighlight %}
 
-Also, set `graphs: default` in the `defaults`section at the top (we don't want a stretched grid graph) and
-remove `dataset_lam` in `hardware: files`.
+Also:
+- set `graphs: default` in the `defaults`section at the top (we don't want a stretched grid graph)
+- remove `dataset_lam` in `hardware: files`.
+- set `drop_vars: [list of variables not available in LAM dataset]` to all datasets. This ensures that you
+- set `sort_vars: True` on all datasets.
+don't pre-train a model based on variables that will not be available when fine-tuning on a LAM model.
 
 ## Training the model
 

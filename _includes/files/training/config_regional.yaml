@@ -30,21 +30,15 @@ dataloader:
   training:
     start: 2020-02-06
     end: 2022-05-31 #15
-    drop: [sdor, slor, cp]
     statistics: ${hardware.paths.data}/aifs-od-an-oper-0001-mars-n320-2019-2023-6h-v6.zarr
-    sort_vars: True
   validation:
     start: 2022-06-01
     end: 2022-12-31
-    drop: [sdor, slor, cp]
     statistics: ${hardware.paths.data}/aifs-od-an-oper-0001-mars-n320-2019-2023-6h-v6.zarr
-    sort_vars: True
   test:
     start: 2022-06-01
     end: 2022-12-31
-    drop: [sdor, slor, cp]
     statistics: ${hardware.paths.data}/aifs-od-an-oper-0001-mars-n320-2019-2023-6h-v6.zarr
-    sort_vars: True
 
 hardware:
   num_gpus_per_node: 8
