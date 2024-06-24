@@ -51,9 +51,8 @@ for regional modelling on LUMI:
 {% include files/lumi/dependencies.yaml %}
 {% endhighlight %}
 
-NOTE: In the pip dependencies, we specify specific versions of anemoi-datasets and anemoi-models that
-include code needed for regional modelling. These features will eventually be merged into the respective
-repositories.
+NOTE: In the pip dependencies, we specify a specific version of anemoi-models that include code needed for
+regional modelling. The code will eventually be merged into the anemoi-models.
 
 To build the container, run the following:
 
@@ -68,7 +67,7 @@ versions of existing dependencies), you will have to build a new container. The 
 contain the dependencies required by the specific version of the code base that you have checked out. It is
 therefore good practice to devise a naming scheme for your containers.
 
-## Setting up Anemoi and aifs-mono
+## Setting up a virtual environent
 
 We did not include aifs-mono in the container above. This is because you will likely work a lot with this
 repository when configuring your training runs. Since it is a hassle to rebuild containers everytime we change
@@ -114,6 +113,11 @@ git clone git@github.com:ecmwf/anemoi-datasets
 pip install -e anemoi-datasets/
 {% endhighlight %}
 
+Or you could install a repository directly, without cloning the repository (even a specific branch):
+{% highlight bash %}
+pip install git+https://github.com/ecmwf/anemoi-datasets.git@some_feature_branch
+{% endhighlight %}
+
 To remove the installation of anemoi-datasets from the virtual environment, just do this:
 {% highlight bash %}
 pip uninstall anemoi-datasets
@@ -142,7 +146,7 @@ You need to tailor the script to your needs:
 - Set the full path to your singularity container
 - Set the command you want to run inside the container
 
-If you want to test that everything is set up correctly, you could use the following script ([download]({{ site.baseurl }}/assets/files/lumi/example.py)) and set <command> to `python example.py` in job_script.py:
+If you want to test that everything is set up correctly, you could use the following script ([download]({{ site.baseurl }}/assets/files/lumi/example.py)) and set `<command>` to `python example.py` in job_script.py:
 
 {% highlight python %}
 {% include files/lumi/example.py %}
