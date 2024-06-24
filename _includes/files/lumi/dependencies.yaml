@@ -63,5 +63,5 @@ dependencies:
       - scikit-image
       - torch_geometric==2.4.0
       - anemoi-utils[provenance]>=0.3
-      - anemoi-datasets[data]>=0.3.3
+      - git+https://github.com/metno/anemoi-datasets.git@feature/sort_vars
       - git+https://github.com/metno/anemoi-models.git@feature/graph_refactor

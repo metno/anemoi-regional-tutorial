@@ -51,8 +51,9 @@ for regional modelling on LUMI:
 {% include files/lumi/dependencies.yaml %}
 {% endhighlight %}
 
-NOTE: In the pip dependencies, we specify a specific version of anemoi-models that include code needed for
-regional modelling. The code will eventually be merged into the anemoi-models.
+NOTE: In the pip dependencies, we specify specific versions of anemoi-datasets and anemoi-models that include
+code needed for regional modelling. anemoi-datasets contains a fix neeed when doing transfer learning and
+anemoi-models contains a fix for PyTorch version. The code will eventually be merged into the anemoi-models.
 
 To build the container, run the following:
 
