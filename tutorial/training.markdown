@@ -32,8 +32,7 @@ hardware).
 The options that are important for us are:
 - **hardware.num_gpus_per_node**: Set this to 8 on LUMI (as there are 8 GPU partitions per node). Other compute
 - **hardware.num_gpus_per_model**: This specifies model paralellism. When running large models on many nodes,
-    consider increasing this.
-clusters might have a different value.
+    consider increasing this. Clusters might have a different value.
 - **hardware.paths.data**: Base directory where datasets are stored
 - **hardware.paths.output**: Where will model checkpoints and other output data such as plots be stored
 - **hardware.files**: This names the datasets that we will use to train with. Use `dataset` for specifying the
