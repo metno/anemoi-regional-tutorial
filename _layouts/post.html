@@ -9,7 +9,9 @@ layout: default
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    {{ content | toc }}
+    {% include toc.html html=content flat_toc=true %}
+    {{ content }}
+
   </div>
 
 </article>

@@ -61,37 +61,3 @@ pre code {
 code {
     background-color: #ffffff;
 }
-
-.toc__list:before {
-    font-weight: bold;
-    font-size: 1.5rem;
-}
-
-.toc__list {
-    border: 2px solid #eee;
-    border-radius: 4px;
-    line-height: 1.5rem;
-    padding: 0rem 0rem;
-    font-weight: 600;
-    margin-left: 0rem;
-
-    list-style-type: none;
-
-}
-
-.toc__sublist li {
-    padding-left: 0.25rem;
-
-}
-
-.toc-h2:first-child {
-    margin-top: 0rem;
-}
-
-#toc a {
-    text-decoration: underline;
-}
-
-#toc a:hover {
-    color: #9D174D;
-}

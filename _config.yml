@@ -15,11 +15,11 @@ github_username:  tnipen
 
 # Build settings
 markdown: kramdown
-plugins:
-  - jekyll-toc
-toc:
-  min_level: 1
-  max_level: 3
-  list_class: toc
-  list_class: toc__list
-  sublist_class: toc__sublist
+  # plugins:
+  #   - jekyll-toc
+  # toc:
+  #   min_level: 1
+  #   max_level: 3
+  #   list_class: toc
+  #   list_class: toc__list
+  #   sublist_class: toc__sublist
