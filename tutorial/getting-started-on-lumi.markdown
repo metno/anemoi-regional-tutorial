@@ -99,7 +99,7 @@ virtualenv .venv
 
 source .venv/bin/activate
 git clone git@github.com:ecmwf-lab/aifs-mono@hackathon
-pip install -e aifs-mono/
+pip install --no-deps -e aifs-mono/
 {% endhighlight %}
 
 You can exit the singularity container by running the command `exit`.
@@ -111,7 +111,7 @@ Optional: If you wanted to install anemoi-datasets (or any other repository) int
 
 {% highlight bash %}
 git clone git@github.com:ecmwf/anemoi-datasets
-pip install -e anemoi-datasets/
+pip install --no-deps -e anemoi-datasets/
 {% endhighlight %}
 
 Or you could install a repository directly, without cloning the repository (even a specific branch):
