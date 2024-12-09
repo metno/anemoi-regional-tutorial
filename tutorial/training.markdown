@@ -8,31 +8,70 @@ toc: true
 tags: anemoi
 ---
 
-In this tutorial, we will train a regional Anemoi model. A pre-requisite is that you have set up aifs-mono and its
-dependencies and that you have available an ERA5 O96 dataset and a MEPS 10km dataset.
+We will train a global Anemoi model on LUMI, using
+the anemoi-training package. The prerequisites are that you have set
+up a virtual environment with the anemoi-training package and
+dependencies, and have the ERA5 O96 dataset in .zarr-format.
 
-## Configuration Options
-The first step is to change the configuration options, which are located in
-`aifs-mono/aifs/config/`. Configuration options in aifs-mono are split across files based on topic. We will
-rely on a lot of these, but override specific ones. Here is a configuration file tailored to a stretched grid
-model, which we will call: `config_regional.yaml`
-([download]({{ site.baseurl }}/assets/files/training/config_regional.yaml)).
 
-{% highlight yaml %}
-{% include files/training/config_regional.yaml %}
+## Structure of the anemoi-training package
+
+To run anemoi-training from bash, execute
+
+{% highlight bash %}
+anemoi-training train --config-dir=CONFIG_DIR --config-name=CONFIG_FILE.yaml
 {% endhighlight %}
 
-The first part specifies the default options from the specified config files. For example, `data: zarr` loads
-data options from `aifs-mono/aifs/config/data/zarr.yaml`.
+where CONFIG_DIR/CONFIG_FILE.yaml is the
+full path to
+your config file. The config file specifies the input dataset to the
+training, training parameters, model architecture, and more. It is structured
+as follows:
 
-The options after the `defaults` section override specific options provided by default. For example, we
-override the number of gpus per node to 8 (which is 1 in the default atos configuration that we loaded for
-hardware).
+{% highlight yaml %}
+defaults:
+  - data: zarr
+  - dataloader: native_grid
+  - diagnostics: evaluation
+  - hardware: slurm
+  - graph: multi_scale
+  - model: gnn
+  - training: default
+  - override hydra/hydra_logging: disabled
+  - override hydra/job_logging: disabled
+  - _self_
+  
+# Override default settings here..
+{% endhighlight %}
 
-The options that are important for us are:
-- **hardware.num_gpus_per_node**: Set this to 8 on LUMI (as there are 8 GPU partitions per node). Other compute
-- **hardware.num_gpus_per_model**: This specifies model paralellism. When running large models on many nodes,
-    consider increasing this. Clusters might have a different value.
+where each of these lines refers to a separate yaml-file inside the
+anemoi-training repository. For example `data: zarr`, refers to the yaml-file
+located in `anemoi-training/src/anemoi/training/config/data/zarr.yaml`. 
+To overwrite one of the configs above, say for
+overwriting the learning rate for training, you can add
+
+{% highlight yaml %}
+training:
+  lr:
+    rate: 1e-3
+{% endhighlight %}
+
+to the end of CONFIG_FILE.yaml. This overwrites the corresponding
+settings from `model: gnn`.
+
+
+Here is a configuration file for running training on the ERA5 dataset
+on LUMI, which we will call: `example.yaml`
+([download]({{ site.baseurl }}/assets/files/training/example.yaml)).
+
+{% highlight yaml %}
+{% include files/training/example.yaml %}
+{% endhighlight %}
+
+In this example, we override the files and paths (which is not
+specified in the slurm.yaml).
+
+Important options for us are:
 - **hardware.paths.data**: Base directory where datasets are stored
 - **hardware.paths.output**: Where will model checkpoints and other output data such as plots be stored
 - **hardware.files**: This names the datasets that we will use to train with. Use `dataset` for specifying the
@@ -43,7 +82,7 @@ graph will be constructed on the fly.
 The value you set for `experiment_name` to create a group many of your runs. `run_name` should be something
 uniquely describing one specific training run.
 
-### Transfer learning
+### Transfer learning (NOT UPDATED, what to do?)
 
 If you want to pre-train a model on one domain and fine-tune on another, you first need to turn off trainable
 parameters by adding this to your configuration:
@@ -77,7 +116,7 @@ don't pre-train a model based on variables that will not be available when fine-
 Finally we can train a regional model! Run this:
 
 {% highlight bash %}
-aifs-train  --config-dir ./ --config-name config_regional.yaml
+anemoi-training  --config-dir=./ --config-name=example.yaml
 {% endhighlight %}
 
 If you are running this in the [job script on LUMI]({{ 'getting-started-on-lumi' }}) that we looked at earlier
